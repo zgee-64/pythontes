@@ -76,7 +76,7 @@ match choose:
 		print("qout =",h[4-1]-h[1-1],"kJ/kg")
 		print("wT =",h[3-1]-h[4-1],"kJ/kg")
 		print("wP =",h[2-1]-h[1-1],"kJ/kg")
-		print("Wirkungsgrad =",(1-((h[4-1]-h[1-1])/(h[3-1]-h[2-1])))*100,"%")
+		print("Efficiency =",(1-((h[4-1]-h[1-1])/(h[3-1]-h[2-1])))*100,"%")
 		print("Mean Temp =",(h[3-1]-h[1-1])/(s[3-1]-s[2-1]),"K")
 		print("Mean Temp =",kelvinToDegreeCelsius((h[3-1]-h[1-1])/(s[3-1]-s[2-1])),"°C")
 				
