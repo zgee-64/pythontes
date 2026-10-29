@@ -1,0 +1,4 @@
+scipy
+coverage
+coveralls
+codecov
