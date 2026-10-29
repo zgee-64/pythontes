@@ -24,7 +24,7 @@ def iawps97():
                 print("Specific internal energy u=",steam.u,"kJ/kg")
                 print("Specific enthalpy h=",steam.h,"kJ/kg")
                 print("Specific entropy s=",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100,"%")
+                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100.0,"%")
             case 1:
                 print(process[chose])
                 pressure = 0.0
@@ -36,7 +36,7 @@ def iawps97():
                 print("Specific volume v=",steam.v,"m³/kg")
                 print("Specific internal energy u=",steam.u,"kJ/kg")
                 print("Specific entropy s=",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100,"%")
+                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100.0,"%")
             case 2:
                 print(process[chose])
                 pressure = 0.0
@@ -48,7 +48,7 @@ def iawps97():
                 print("Specific volume v=",steam.v,"m³/kg")
                 print("Specific internal energy u=",steam.u,"kJ/kg")
                 print("Specific enthalpy h=",steam.h,"kJ/kg")
-                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100,"%")
+                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100.0,"%")
             case 3:
                 print(process[chose])
                 enthalpy = 0.0
@@ -60,14 +60,14 @@ def iawps97():
                 print("Pressure P=",functions.mPaToBar(steam.P),"bar")
                 print("Specific volume v=",steam.v,"m³/kg")
                 print("Specific internal energy u=",steam.u,"kJ/kg")
-                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100,"%")
+                print("Steam quality 100%=Steam 0%=Water x=",steam.x*100.0,"%")
             case 4:
                 print(process[chose])
                 quality = 0.0
                 temperature = 0.0
                 temperature = float(input("Input temperature in °C: "))
                 quality = float(input("Input steam quality in %: "))
-                steam = IAPWS97(x=quality/100, T=functions.degreeCelsiusToKelvin(temperature))
+                steam = IAPWS97(x=quality/100.0, T=functions.degreeCelsiusToKelvin(temperature))
                 print("Pressure P=",functions.mPaToBar(steam.P),"bar")
                 print("Specific volume v=",steam.v,"m³/kg")
                 print("Specific internal energy u=",steam.u,"kJ/kg")
@@ -79,7 +79,7 @@ def iawps97():
                 pressure = 0.0
                 pressure = float(input("Input pressure in bar: "))
                 quality = float(input("Input steam quality in %: "))
-                steam = IAPWS97(x=quality/100, P=functions.barToMPa(pressure))
+                steam = IAPWS97(x=quality/100.0, P=functions.barToMPa(pressure))
                 print("Temperature T=",functions.kelvinToDegreeCelsius(steam.T),"°C")
                 print("Specific volume v=",steam.v,"m³/kg")
                 print("Specific internal energy u=",steam.u,"kJ/kg")
