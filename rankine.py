@@ -13,11 +13,13 @@ def rankine():
         chose = chose - 1
         match chose:
             case 0:
+                print("")
                 print(process[0])
                 print("1 → 2 Isentropic pressure increase (liquid water)")
                 print("2 → 3 Isobaric heat input (to condition of dry saturated vapor)")
                 print("3 → 4 Isentropic expansion of the steam (within the 2-phase region)")
                 print("4 → 1 Isobaric heat rejection (to condition of saturated liquid)")
+                print("")
 
                 p = [0.0,0.0,0.0,0.0]
                 t = [0.0,0.0,0.0,0.0]
@@ -33,6 +35,7 @@ def rankine():
                 p[4-1] = p[1-1]
 
                 t[3-1] = float(input("Input T3 in °C: "))
+                print("")
 
                 steam = IAPWS97(P=functions.barToMPa(p[3-1]), T=functions.degreeCelsiusToKelvin(t[3-1]))
                 h[3-1] = steam.h
@@ -62,20 +65,26 @@ def rankine():
 
                 steam = IAPWS97(P=functions.barToMPa(p[2-1]), h=h[2-1])
                 t[2-1] = functions.kelvinToDegreeCelsius(steam.T)
-                print("Obtaining temperature(T2) from IAWPS97 through P2=",p[2-1],"bar and h2=",h[2-1],"kj/kg")
+                print("8. Obtaining temperature(T2) from IAWPS97 through P2=",p[2-1],"bar and h2=",h[2-1],"kj/kg")
+                print("")
 
                 print("Results: ")
                 print(" ","|","p(bar)","|","T(°C)","|","h(kJ/kg)","|","s(kj/kgK)")
                 for i in range(4):
                     print(1+i,"|",p[i],"|",t[i],"|",h[i],"|",s[i])
 
+                print("")
                 print("qin = h3-h2 =",h[3-1]-h[2-1],"kJ/kg")
                 print("qout = h4-h1 =",h[4-1]-h[1-1],"kJ/kg")
                 print("wT = h3-h4 =",h[3-1]-h[4-1],"kJ/kg")
                 print("wP = h3-h1 =",h[2-1]-h[1-1],"kJ/kg")
+                print("")
                 print("Efficiency = (1-(h4-h2)/(h3-h2))*100 =",(1-((h[4-1]-h[1-1])/(h[3-1]-h[2-1])))*100,"%")
+                print("")
                 print("Mean Temp = (h3-h1)/(s3-s2) =",(h[3-1]-h[1-1])/(s[3-1]-s[2-1]),"K")
                 print("Mean Temp = Mean Temp-273.15 =",functions.kelvinToDegreeCelsius((h[3-1]-h[1-1])/(s[3-1]-s[2-1])),"°C")
+                print("")
                 print("Mean Thermal efficiency = 1-T1/Mean Temp =",(1-((functions.degreeCelsiusToKelvin(t[1-1]))/((h[3-1]-h[1-1])/(s[3-1]-s[2-1]))))*100,"%")
+                print("")
             case _:
                 break

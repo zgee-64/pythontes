@@ -1,4 +1,0 @@
-scipy
-numpy
-numpydoc
-sphinx_rtd_theme
