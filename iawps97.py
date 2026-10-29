@@ -2,7 +2,7 @@ from iapws import IAPWS97
 import functions
 
 def iawps97():
-    process = ["Only Saturation region T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)"]    #all possible processes that can be calculated
+    process = ["Only saturated gas or liquid T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)"]    #all possible processes that can be calculated
     chose = 0
 
     while True:
