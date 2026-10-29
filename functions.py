@@ -1,9 +1,9 @@
 def degreeCelsiusToKelvin(degreeCelsius):
-    kelvin = degreeCelsius + 274.15
+    kelvin = degreeCelsius + 273.15
     return kelvin
 
 def kelvinToDegreeCelsius(kelvin):
-    degreeCelsius = kelvin - 274.15
+    degreeCelsius = kelvin - 273.15
     return degreeCelsius
 
 def barToMPa(bar):
