@@ -3,7 +3,7 @@ import iawps97
 import rankine
 import unitConversion
 
-calculate = ["Unit Conversion","IAWPS97", "Rankine"]    #all possible calculations that can be calculated
+calculate = ["Unit Conversion","IAWPS97", "Rankine Cycle"]    #all possible calculations that can be calculated
 choose = 0
 while True:
     for i in range(len(calculate)):   #print all possible calculations

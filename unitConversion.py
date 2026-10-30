@@ -15,6 +15,7 @@ def unitConversion():
         chose = chose - 1
         match chose:
             case 0:
-                print()
+                print("")
+                print(process[chose])
             case _:
                 break
