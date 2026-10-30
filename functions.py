@@ -1,3 +1,5 @@
+from iapws import IAPWS97
+
 def degreeCelsiusToKelvin(degreeCelsius):
     kelvin = degreeCelsius + 273.15
     return kelvin
@@ -35,3 +37,12 @@ def floatinput(text):
             break
         except ValueError:
             print("Invalid input!")
+
+def iawpsTs(t=0.0,s=0.0,p1=1,p2=0.001,stepSize=0.0001,tolerance=0.1):
+    while p1>=p2:
+        steam = IAPWS97(P=barToMPa(p1), s=s)
+        p1 = p1 - stepSize
+        #print(kelvinToDegreeCelsius(steam.T))
+        if steam.T<=(degreeCelsiusToKelvin(t)+tolerance) and steam.T>=(degreeCelsiusToKelvin(t)-tolerance):
+            return steam
+            break
