@@ -1,5 +1,7 @@
 from iapws import IAPWS97
 import functions
+from functions import intinput
+from functions import floatinput
 
 def iawps97():
     process = ["Only saturated gas or liquid T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)"]    #all possible processes that can be calculated

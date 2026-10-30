@@ -1,5 +1,7 @@
 from iapws import IAPWS97
 import functions
+from functions import intinput
+from functions import floatinput
 
 def rankine():
     process = ["Ideal generating Clausius-Rankine process (p3, p1, T3) given", "placeholder for other given values"]    #all possible processes that can be calculated
@@ -9,7 +11,7 @@ def rankine():
         for i in range(len(process)):   #print all possible processes
             print(i+1,". ", process[i])
 
-        chose = int(input("Choose the process that is to be calculated (1, 2, 3, ...)(number out of range to go back): "))   #input number
+        chose = intinput("Choose the process that is to be calculated (1, 2, 3, ...)(number out of range to go back): ")   #input number
         chose = chose - 1
         match chose:
             case 0:
@@ -28,13 +30,13 @@ def rankine():
                 x4 = 0.0 #in Percent
                 v1 = 0.0 #in m3/kg
 
-                p[3-1] = float(input("Input p2 or p3 in bar: "))
+                p[3-1] = floatinput("Input p2 or p3 in bar: ")
                 p[2-1] = p[3-1]
 
-                p[1-1] = float(input("Input p1 or p4 in bar: "))
+                p[1-1] = floatinput("Input p1 or p4 in bar: ")
                 p[4-1] = p[1-1]
 
-                t[3-1] = float(input("Input T3 in °C: "))
+                t[3-1] = floatinput("Input T3 in °C: ")
                 print("")
 
                 steam = IAPWS97(P=functions.barToMPa(p[3-1]), T=functions.degreeCelsiusToKelvin(t[3-1]))
