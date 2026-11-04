@@ -152,7 +152,7 @@ def rankine():
                     pshaft = (effMT/100)*massFlow*wT
                     print("8.1. Pmt = massFlow * wT * mechanicalEffTurbine =",pshaft,"kW")
                     pTel = (effET/100)*pshaft
-                    print("8.2. Pelt = Pmt * electricEffTurbine =",pPel,"kW")
+                    print("8.2. Pelt = Pmt * electricEffTurbine =",pTel,"kW")
                     print()
 
             case _:
