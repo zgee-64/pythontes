@@ -2,7 +2,36 @@ from iapws import IAPWS97
 import functions
 from functions import intinput
 from functions import floatinput
-from functions import iawpsTs
+
+def iawpsTs(t=0.0,s=0.0,p1=50000000.0,p2=1000.0,tolerance=0.01):
+    notFinished1 = True
+    pressure = 0.0
+
+    while notFinished1:
+        notFinished2 = True
+        stepSize = (p1-p2)/10.0
+        while p1>=p2 and notFinished2:
+
+            steam = IAPWS97(P=functions.paToMPa(p1), s=s)
+            #print(kelvinToDegreeCelsius(steam.T))
+
+            if p1 == p2 and steam.T > t:
+                print("Temperature value is not reachable in stated pressure area")
+                pressure = p1
+                notFinished1 = False
+            if steam.T < t:
+                notFinished2 = False
+            if steam.T<=(t + tolerance) and steam.T>=(t - tolerance):
+                pressure = p1
+                notFinished1 = False
+            if notFinished2:
+                p1 = p1-stepSize
+        if notFinished1:
+            p2 = p1
+            p1 = p1 + stepSize
+
+    steam = IAPWS97(P=functions.paToMPa(pressure), s=s)
+    return steam
 
 def iawps97():
     process = ["Only saturated gas or liquid T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)","Can be really slow use carfully T(°C), s(kJ/kg*K)"]    #all possible processes that can be calculated

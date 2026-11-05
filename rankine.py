@@ -2,7 +2,6 @@ from iapws import IAPWS97
 import functions
 from functions import intinput
 from functions import floatinput
-from functions import iawpsTs
 
 def rankine():
     process = ["Ideal superheated generating Clausius-Rankine process (p3, p1, T3) given", "Conversion to real (use last values or input h1, h2, h3 and h4)"]    #all possible processes that can be calculated
