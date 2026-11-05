@@ -33,8 +33,20 @@ def iawpsTs(t=0.0,s=0.0,p1=50000000.0,p2=1000.0,tolerance=0.01):
     steam = IAPWS97(P=functions.paToMPa(pressure), s=s)
     return steam
 
+def iawpsOut(steam):
+    print()
+    print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
+    print("Pressure P =",functions.mPaToBar(steam.P),"bar")
+    print("Specific volume v =",steam.v,"m³/kg")
+    print("Specific internal energy u =",steam.u,"kJ/kg")
+    print("Specific enthalpy h =",steam.h,"kJ/kg")
+    print("Specific entropy s =",steam.s,"kJ/kg*K")
+    print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
+    print()
+
+
 def iawps97():
-    process = ["Only saturated gas or liquid T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)","Can be really slow use carfully T(°C), s(kJ/kg*K)"]    #all possible processes that can be calculated
+    process = ["Only saturated gas or liquid T(°C), P(bar)", "P(bar), h(kJ/kg)", "P(bar), s(kJ/kg*K)", "s(kJ/kg*K), h(kJ/kg)", "Only two-phase region T(°C), x(%)", "Only two-phase region P(bar), x(%)","Search area 500bar - 0.01bar T(°C), s(kJ/kg*K)"]    #all possible processes that can be calculated
     chose = 0
 
     while True:
@@ -44,6 +56,7 @@ def iawps97():
 
         chose = intinput("Choose the process that is to be calculated (1, 2, 3, ...)(number out of range to go back): ")   #input number
         chose = chose - 1
+
         match chose:
             case 0:
                 print()
@@ -52,16 +65,14 @@ def iawps97():
                 temperature = 0.0
                 pressure = floatinput("Input pressure in bar: ")
                 temperature = floatinput("Input temperature in °C: ")
-                steam = IAPWS97(P=functions.barToMPa(pressure), T=functions.degreeCelsiusToKelvin(temperature))
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(P=functions.barToMPa(pressure), T=functions.degreeCelsiusToKelvin(temperature))
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 1:
                 print()
                 print(process[chose])
@@ -69,16 +80,14 @@ def iawps97():
                 enthalpy = 0.0
                 pressure = floatinput("Input pressure in bar: ")
                 enthalpy = floatinput("Input enthalpy in kJ/Kg: ")
-                steam = IAPWS97(P=functions.barToMPa(pressure), h=enthalpy)
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(P=functions.barToMPa(pressure), h=enthalpy)
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 2:
                 print()
                 print(process[chose])
@@ -86,16 +95,14 @@ def iawps97():
                 entropy = 0.0
                 pressure = floatinput("Input pressure in bar: ")
                 entropy = floatinput("Input entropy in kJ/Kg*K: ")
-                steam = IAPWS97(P=functions.barToMPa(pressure), s=entropy)
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(P=functions.barToMPa(pressure), s=entropy)
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 3:
                 print()
                 print(process[chose])
@@ -103,16 +110,14 @@ def iawps97():
                 entropy = 0.0
                 enthalpy = floatinput("Input enthalpy in kJ/Kg: ")
                 entropy = floatinput("Input entropy in kJ/Kg*K: ")
-                steam = IAPWS97(h=enthalpy, s=entropy)
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(h=enthalpy, s=entropy)
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 4:
                 print()
                 print(process[chose])
@@ -120,16 +125,14 @@ def iawps97():
                 temperature = 0.0
                 temperature = floatinput("Input temperature in °C: ")
                 quality = floatinput("Input steam quality in %: ")
-                steam = IAPWS97(x=quality/100.0, T=functions.degreeCelsiusToKelvin(temperature))
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(x=quality/100.0, T=functions.degreeCelsiusToKelvin(temperature))
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 5:
                 print()
                 print(process[chose])
@@ -137,16 +140,14 @@ def iawps97():
                 pressure = 0.0
                 pressure = floatinput("Input pressure in bar: ")
                 quality = floatinput("Input steam quality in %: ")
-                steam = IAPWS97(x=quality/100.0, P=functions.barToMPa(pressure))
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = IAPWS97(x=quality/100.0, P=functions.barToMPa(pressure))
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
             case 6:
                 print()
                 print(process[chose])
@@ -154,16 +155,13 @@ def iawps97():
                 entropy = 0.0
                 temperature = floatinput("Input temperature in °C: ")
                 entropy = floatinput("Input entropy in kJ/Kg*K: ")
-                steam = iawpsTs(t=functions.degreeCelsiusToKelvin(temperature), s=entropy)
-                print()
-                print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
-                print("Pressure P =",functions.mPaToBar(steam.P),"bar")
-                print("Specific volume v =",steam.v,"m³/kg")
-                print("Specific internal energy u =",steam.u,"kJ/kg")
-                print("Specific enthalpy h =",steam.h,"kJ/kg")
-                print("Specific entropy s =",steam.s,"kJ/kg*K")
-                print("Steam quality 100%=Steam 0%=Water x =",steam.x*100.0,"%")
-                print()
+                try:
+                    steam = iawpsTs(t=functions.degreeCelsiusToKelvin(temperature), s=entropy)
+                    iawpsOut(steam)
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
 
             case _:
                 break
