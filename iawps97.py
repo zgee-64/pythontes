@@ -3,7 +3,7 @@ import functions
 from functions import intinput
 from functions import floatinput
 
-def iawpsTs(t=0.0,s=0.0,p1=50000000.0,p2=1000.0,tolerance=0.01):
+def iawpsTs(t=0.0,s=0.0,p1=50000000.0,p2=1000.0,tolerance=0.0001):
     notFinished1 = True
     pressure = 0.0
 
@@ -19,13 +19,18 @@ def iawpsTs(t=0.0,s=0.0,p1=50000000.0,p2=1000.0,tolerance=0.01):
                 print("Temperature value is not reachable in stated pressure area")
                 pressure = p1
                 notFinished1 = False
+
             if steam.T < t:
                 notFinished2 = False
+
             if steam.T<=(t + tolerance) and steam.T>=(t - tolerance):
                 pressure = p1
                 notFinished1 = False
+                notFinished2 = False
+
             if notFinished2:
                 p1 = p1-stepSize
+
         if notFinished1:
             p2 = p1
             p1 = p1 + stepSize
