@@ -125,7 +125,7 @@ def iawps97():
                 entropy = 0.0
                 temperature = floatinput("Input temperature in °C: ")
                 entropy = floatinput("Input entropy in kJ/Kg*K: ")
-                steam = iawpsTs(t=temperature, s=entropy)
+                steam = iawpsTs(t=functions.degreeCelsiusToKelvin(temperature), s=entropy)
                 print()
                 print("Temperature T =",functions.kelvinToDegreeCelsius(steam.T),"°C")
                 print("Pressure P =",functions.mPaToBar(steam.P),"bar")

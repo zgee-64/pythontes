@@ -48,30 +48,32 @@ def floatinput(text):
         except ValueError:
             print("Invalid input!")
 
-def iawpsTs(t=0.0,s=0.0,p1=100000000.0,p2=1.0,tolerance=0.1):
-    notFinished = True
+def iawpsTs(t=0.0,s=0.0,p1=100000000.0,p2=1000.0,tolerance=0.01):
+    notFinished1 = True
     pressure = 0.0
 
-    while notFinished:
-        stepSize = p1-p2/10.0
-        while p1>=p2 and notFinished:
+    while notFinished1:
+        notFinished2 = True
+        stepSize = (p1-p2)/10.0
+        while p1>=p2 and notFinished2:
 
             steam = IAPWS97(P=paToMPa(p1), s=s)
-            p1 = p1 - stepSize
-            print(kelvinToDegreeCelsius(steam.T))
+            #print(kelvinToDegreeCelsius(steam.T))
 
-            if steam.T < degreeCelsiusToKelvin(t):
-                p2 = p1
-                p1 = p1 + stepSize
-
-            if p1 == p2 and steam.T > degreeCelsiusToKelvin(t):
+            if p1 == p2 and steam.T > t:
                 print("Temperature value is not reachable in stated pressure area")
                 pressure = p1
-                notFinished = False
-
-            if steam.T<=(degreeCelsiusToKelvin(t)+tolerance) and steam.T>=(degreeCelsiusToKelvin(t)-tolerance):
+                notFinished1 = False
+            if steam.T < t:
+                notFinished2 = False
+            if steam.T<=(t + tolerance) and steam.T>=(t - tolerance):
                 pressure = p1
-                notFinished = False
+                notFinished1 = False
+            if notFinished2:
+                p1 = p1-stepSize
+        if notFinished1:
+            p2 = p1
+            p1 = p1 + stepSize
 
     steam = IAPWS97(P=paToMPa(pressure), s=s)
     return steam

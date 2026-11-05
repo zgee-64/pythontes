@@ -95,20 +95,15 @@ def rankine():
                 print()
                 print(process[1])
                 print()
-                print("1 . Input h1, h2, h3 and h4 from an ideal cycle")
                 if h[1-1] != 0 and h[2-1] != 0 and h[3-1] != 0 and h[4-1] != 0:
-                    print("2 . Use values from last calculation")
+                    print("Old values from last calculation are used")
                 print()
-                chooose = intinput("Choose the wanted input method (1, 2)")
-                print()
-                if chooose == 1:
+                if h[1-1] == 0 or h[2-1] == 0 or h[3-1] == 0 or h[4-1] == 0:
                     h[1-1] = floatinput("Input h1 in kJ/kg:")
                     h[2-1] = floatinput("Input h2 in kJ/kg:")
                     h[3-1] = floatinput("Input h3 in kJ/kg:")
                     h[4-1] = floatinput("Input h4 in kJ/kg:")
 
-                if chooose == 2:
-                    print("Old values are used")
                 print()
                 print(" ","|","h(kJ/kg)")
                 for i in range(4):
