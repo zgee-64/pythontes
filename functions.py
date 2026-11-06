@@ -17,14 +17,11 @@ def kelvinToFahrenheit(kelvin):
     return fahrenheit
 
 def rankineToKelvin(rankine):
-    if rankine > 0:
-        kelvin = rankine / (5/9)
-    if rankine == 0:
-        kelvin = 0
+    kelvin = rankine * (5/9)
     return kelvin
 
 def kelvinToRankine(kelvin):
-    rankine = kelvin * (5/9)
+    rankine = kelvin * (9/5)
     return rankine
 
 def reamurToKelvin(reamur):
@@ -42,16 +39,18 @@ def kelvinToReamur(kelvin):
 def barToMPa(bar):
     if bar > 0:
         mpa = bar / 10.0
+        return mpa
     if bar == 0:
         mpa = 0
-    return mpa
+        return mpa
 
 def paToMPa(pa):
     if pa > 0:
         mpa = pa / 1000000.0
+        return mpa
     if pa == 0:
         mpa = 0
-    return mpa
+        return mpa
 
 def mPaToBar(mPa):
     bar = mPa * 10.0

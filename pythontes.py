@@ -1,9 +1,10 @@
 from functions import intinput
 import iawps97
+import interpolation
 import rankine
 import unitConversion
 
-calculate = ["Unit Conversion","IAWPS97", "Rankine Cycle"]    #all possible calculations that can be calculated
+calculate = ["Unit Conversion","Interpolation","IAWPS97","Rankine Cycle"]    #all possible calculations that can be calculated
 choose = 0
 while True:
     for i in range(len(calculate)):   #print all possible calculations
@@ -19,8 +20,11 @@ while True:
                 unitConversion.unitConversion()
             case 1:
                 print(calculate[choose])
-                iawps97.iawps97()
+                interpolation.interpolation()
             case 2:
+                print(calculate[choose])
+                iawps97.iawps97()
+            case 3:
                 print(calculate[choose])
                 rankine.rankine()
             case _:

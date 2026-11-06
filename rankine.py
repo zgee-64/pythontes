@@ -95,62 +95,67 @@ def rankine():
                     print()
 
             case 1:
-                print()
-                print(process[1])
-                print()
-                if h[1-1] != 0 and h[2-1] != 0 and h[3-1] != 0 and h[4-1] != 0:
-                    print("Old values from last calculation are used")
-                print()
-                if h[1-1] == 0 or h[2-1] == 0 or h[3-1] == 0 or h[4-1] == 0:
-                    h[1-1] = floatinput("Input h1 in kJ/kg:")
-                    h[2-1] = floatinput("Input h2 in kJ/kg:")
-                    h[3-1] = floatinput("Input h3 in kJ/kg:")
-                    h[4-1] = floatinput("Input h4 in kJ/kg:")
+                try:
+                    print()
+                    print(process[1])
+                    print()
+                    if h[1-1] != 0 and h[2-1] != 0 and h[3-1] != 0 and h[4-1] != 0:
+                        print("Old values from last calculation are used")
+                    print()
+                    if h[1-1] == 0 or h[2-1] == 0 or h[3-1] == 0 or h[4-1] == 0:
+                        h[1-1] = floatinput("Input h1 in kJ/kg:")
+                        h[2-1] = floatinput("Input h2 in kJ/kg:")
+                        h[3-1] = floatinput("Input h3 in kJ/kg:")
+                        h[4-1] = floatinput("Input h4 in kJ/kg:")
 
-                print()
-                print(" ","|","h(kJ/kg)")
-                for i in range(4):
-                    print(1+i,"|",h[i])
-                print()
-                effSP = floatinput("Input isentropic efficiency of the pump in %:")
-                effST = floatinput("Input isentropic efficiency of the turbine in %:")
-                print()
-                wP = (h[2-1]-h[1-1])/(effSP/100)
-                print("1. wP = (h2s-h1) / isentropicEffPump =",wP,"kJ/kg")
-                h[2-1] = h[1-1]+wP
-                print("2. h2 = h1 - wP =",h[2-1],"kJ/kg")
-                qin = h[3-1]-h[2-1]
-                print("3. qin = h3 - h2 =",qin,"kJ/kg")
-                wT = (effST/100)*(h[3-1]-h[4-1])
-                print("4. wT = isentropicEffPump * (h3 - h4s) =",wT,"kJ/kg")
-                h[4-1] = h[3-1]-wT
-                print("5. h4 = h3 - wT =",h[4-1],"kJ/kg")
-                effth = ((wT-wP)/qin)*100
-                print("6. thermalEff = (wT - wP) / qin =",effth,"%")
-                print()
-                print(" ","|","h(kJ/kg)")
-                for i in range(4):
-                    print(1+i,"|",h[i])
-                print()
-                massFlow = floatinput("Input massflow if avalible (kg/s)(to quit input 0): ")
-                if massFlow == 0:
-                    print("Calculation finished")
-                if massFlow != 0:
-                    effMP = floatinput("Input mechanical efficiency of the pump in %:")
-                    effEP = floatinput("Input electric efficiency of the pump in %:")
                     print()
-                    effMT = floatinput("Input mechanical efficiency of the turbine in %:")
-                    effET = floatinput("Input electric efficiency of the turbine in %:")
+                    print(" ","|","h(kJ/kg)")
+                    for i in range(4):
+                        print(1+i,"|",h[i])
                     print()
-                    ppump = (massFlow*wP)/(effMP/100)
-                    print("7.1. Pmp = (massFlow * wP) / mechanicalEffPump =",ppump,"kW")
-                    pPel = (effEP/100)*ppump
-                    print("7.2. Pelp = Pmp * electricEffPump =",pPel,"kW")
+                    effSP = floatinput("Input isentropic efficiency of the pump in %:")
+                    effST = floatinput("Input isentropic efficiency of the turbine in %:")
                     print()
-                    pshaft = (effMT/100)*massFlow*wT
-                    print("8.1. Pmt = massFlow * wT * mechanicalEffTurbine =",pshaft,"kW")
-                    pTel = (effET/100)*pshaft
-                    print("8.2. Pelt = Pmt * electricEffTurbine =",pTel,"kW")
+                    wP = (h[2-1]-h[1-1])/(effSP/100)
+                    print("1. wP = (h2s-h1) / isentropicEffPump =",wP,"kJ/kg")
+                    h[2-1] = h[1-1]+wP
+                    print("2. h2 = h1 - wP =",h[2-1],"kJ/kg")
+                    qin = h[3-1]-h[2-1]
+                    print("3. qin = h3 - h2 =",qin,"kJ/kg")
+                    wT = (effST/100)*(h[3-1]-h[4-1])
+                    print("4. wT = isentropicEffPump * (h3 - h4s) =",wT,"kJ/kg")
+                    h[4-1] = h[3-1]-wT
+                    print("5. h4 = h3 - wT =",h[4-1],"kJ/kg")
+                    effth = ((wT-wP)/qin)*100
+                    print("6. thermalEff = (wT - wP) / qin =",effth,"%")
+                    print()
+                    print(" ","|","h(kJ/kg)")
+                    for i in range(4):
+                        print(1+i,"|",h[i])
+                    print()
+                    massFlow = floatinput("Input massflow if avalible (kg/s)(to quit input 0): ")
+                    if massFlow == 0:
+                        print("Calculation finished")
+                    if massFlow != 0:
+                        effMP = floatinput("Input mechanical efficiency of the pump in %:")
+                        effEP = floatinput("Input electric efficiency of the pump in %:")
+                        print()
+                        effMT = floatinput("Input mechanical efficiency of the turbine in %:")
+                        effET = floatinput("Input electric efficiency of the turbine in %:")
+                        print()
+                        ppump = (massFlow*wP)/(effMP/100)
+                        print("7.1. Pmp = (massFlow * wP) / mechanicalEffPump =",ppump,"kW")
+                        pPel = (effEP/100)*ppump
+                        print("7.2. Pelp = Pmp * electricEffPump =",pPel,"kW")
+                        print()
+                        pshaft = (effMT/100)*massFlow*wT
+                        print("8.1. Pmt = massFlow * wT * mechanicalEffTurbine =",pshaft,"kW")
+                        pTel = (effET/100)*pshaft
+                        print("8.2. Pelt = Pmt * electricEffTurbine =",pTel,"kW")
+                        print()
+                except ValueError:
+                    print()
+                    print("Not possible value used")
                     print()
 
             case _:
