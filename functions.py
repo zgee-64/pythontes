@@ -8,6 +8,37 @@ def kelvinToDegreeCelsius(kelvin):
     degreeCelsius = kelvin - 273.15
     return degreeCelsius
 
+def fahrenheitToKelvin(fahrenheit):
+    kelvin = (fahrenheit - 32) * 5/9 + 273.15
+    return kelvin
+
+def kelvinToFahrenheit(kelvin):
+    fahrenheit = (kelvin - 273.15) * 9/5 + 32
+    return fahrenheit
+
+def rankineToKelvin(rankine):
+    if rankine > 0:
+        kelvin = rankine / (5/9)
+    if rankine == 0:
+        kelvin = 0
+    return kelvin
+
+def kelvinToRankine(kelvin):
+    rankine = kelvin * (5/9)
+    return rankine
+
+def reamurToKelvin(reamur):
+    if reamur != 0:
+        kelvin = (reamur / (4/5)) + 273.15
+        return kelvin
+    if reamur == 0:
+        kelvin = 273.15
+        return kelvin
+
+def kelvinToReamur(kelvin):
+    reamur = (kelvin - 273.15) * (4/5)
+    return reamur
+
 def barToMPa(bar):
     if bar > 0:
         mpa = bar / 10.0
