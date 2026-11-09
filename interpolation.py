@@ -9,7 +9,7 @@ def linearInterpolation(x=0.0,x1=0.0,x2=0.0,y1=0.0,y2=0.0):
 
 
 def interpolation():
-    process = ["Linear interpolation"]    #all possible processes that can be calculated
+    process = ["Linear interpolation","Logarythmic interpolation"]    #all possible processes that can be calculated
     chose = 0
     while True:
 
