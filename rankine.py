@@ -145,14 +145,16 @@ def rankine():
                         print()
                         ppump = (massFlow*wP)/(effMP/100)
                         print("7.1. Pmp = (massFlow * wP) / mechanicalEffPump =",ppump,"kW")
-                        pPel = (effEP/100)*ppump
-                        print("7.2. Pelp = Pmp * electricEffPump =",pPel,"kW")
+                        pPel = ppump/(effEP/100)
+                        print("7.2. Pelp = Pmp / electricEffPump =",pPel,"kW")
                         print()
                         pshaft = (effMT/100)*massFlow*wT
                         print("8.1. Pmt = massFlow * wT * mechanicalEffTurbine =",pshaft,"kW")
                         pTel = (effET/100)*pshaft
                         print("8.2. Pelt = Pmt * electricEffTurbine =",pTel,"kW")
                         print()
+                        pelnet = pTel-pPel
+                        print("9. Pel,net = Pelt - Pelp =",pelnet,"kw")
                 except ValueError:
                     print()
                     print("Not possible value used")
