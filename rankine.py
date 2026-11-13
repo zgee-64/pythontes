@@ -1,15 +1,15 @@
 from iapws import IAPWS97
 import functions
-from functions import intinput
+from functions import intinput, kelvinToDegreeCelsius
 from functions import floatinput
 
 def rankine():
-    process = ["Ideal superheated generating Clausius-Rankine process (p3, p1, T3) given", "Conversion to real (use last values or input h1, h2, h3 and h4)"]    #all possible processes that can be calculated
+    process = ["Ideal superheated generating Clausius-Rankine process (p3, p1, T3) given", "Conversion to real (use last values or input h1, h2, h3 and h4)","Ideal superheated generating Clausius-Rankine process with added reheat cycle (WIP)"]    #all possible processes that can be calculated
     chose = 0
-    p = [0.0,0.0,0.0,0.0]
-    t = [0.0,0.0,0.0,0.0]
-    h = [0.0,0.0,0.0,0.0]
-    s = [0.0,0.0,0.0,0.0]
+    p = [0.0,0.0,0.0,0.0,0.0,0.0]
+    t = [0.0,0.0,0.0,0.0,0.0,0.0]
+    h = [0.0,0.0,0.0,0.0,0.0,0.0]
+    s = [0.0,0.0,0.0,0.0,0.0,0.0]
     while True:
 
         for i in range(len(process)):   #print all possible processes
@@ -159,6 +159,107 @@ def rankine():
                     print()
                     print("Not possible value used")
                     print()
+
+            case 2:
+                print()
+                print(process[2])
+                print("1 → 2 Isentropic pressure increase (liquid water)")
+                print("2 → 3 Isobaric heat input (to condition of dry saturated vapor)")
+                print("3 → 4 Isentropic expansion of the steam (to the wanted pressure in the low pressure turbine)")
+                print("4 → 5 Isobaric heat input to the same temperature in 3")
+                print("5 → 6 Isobaric heat rejection (to condition of saturated liquid)")
+                print("6 → 1 Isobaric heat rejection (to condition of saturated liquid)")
+                print()
+
+                x4 = 0.0 #in Percent
+                x6 = 0.0 #in Percent
+                v5 = 0.0 #in m3/kg
+
+                p[3-1] = floatinput("Input p2 or p3 in bar: ")
+                p[2-1] = p[3-1]
+
+                p[1-1] = floatinput("Input p1 or p6 in bar: ")
+                p[6-1] = p[1-1]
+
+                p[4-1] = floatinput("Input reheat pressure p4 or p5 in bar: ")
+                p[5-1] = p[4-1]
+
+                t[3-1] = floatinput("Input T3 (equals T5) in °C: ")
+                t[5-1] = t[3-1]
+                print()
+
+                try:
+                    steam = IAPWS97(P=functions.barToMPa(p[3-1]), T=functions.degreeCelsiusToKelvin(t[3-1]))
+                    h[3-1] = steam.h
+                    s[3-1] = steam.s
+                    s[4-1] = s[3-1]
+                    print("1. Obtaining enthalpy(h3) and entropy(s3) from IAWPS97 through P3=",p[3-1],"bar and T3=",t[3-1],"°C for saturated state superheated vapor")
+                    print("2. Entropy s3 equals s4 in Isentropic expansion")
+
+                    steam = IAPWS97(P=functions.barToMPa(p[4-1]), s=s[4-1])
+                    h[4-1] = steam.h
+                    t[4-1] = functions.kelvinToDegreeCelsius(steam.T)
+                    x4 = steam.x*100
+                    print("3. Obtaining temperature(T4) and enthalpy(h4) from IAWPS97 through P4=",p[4-1],"bar and s4=",s[4-1],"kJ/kg*K")
+                    print("4. Steam quality x=",x4,"%")
+
+                    steam = IAPWS97(P=functions.barToMPa(p[5-1]), T=functions.degreeCelsiusToKelvin(t[5-1]))
+                    h[5-1] = steam.h
+                    s[5-1] = steam.s
+                    s[6-1] = s[5-1]
+                    #v5 = steam.v
+                    print("5. Obtaining enthalpy(h5), entropy(s5) from IAWPS97 through P5=",p[5-1],"bar and T5=",t[5-1],"°C for saturated state liquid")
+                    print("6. Entropy s6 equals s5 in Isentropic expansion")
+
+                    steam = IAPWS97(P=functions.barToMPa(p[6-1]), s=s[6-1])
+                    h[6-1] = steam.h
+                    t[6-1] = functions.kelvinToDegreeCelsius(steam.T)
+                    t[1-1] = t[6-1]
+                    x6 = steam.x
+                    print("7. Obtaining enthalpy(h6), temperature(t6) from IAWPS97 through P6=",p[6-1],"bar and s6=",s[6-1],"°C for saturated state liquid")
+                    print("8. Steam quality x=",x6,"%")
+                    print("T1 equals T6")
+
+                    steam = IAPWS97(P=functions.barToMPa(p[1-1]), T=functions.degreeCelsiusToKelvin(t[1-1]))
+                    h[1-1] = steam.h
+                    s[1-1] = steam.s
+                    s[2-1] = s[1-1]
+                    print("9. Obtaining enthalpy(h1) and entropy(s1) from IAWPS97 through P1=",p[1-1],"bar and T1=",t[1-1],"°C")
+                    print()
+
+                    steam = IAPWS97(P=functions.barToMPa(p[2-1]), s=s[2-1])
+                    h[2-1] = steam.h
+                    t[2-1] = functions.kelvinToDegreeCelsius(steam.T)
+                    print("10. Obtaining enthalpy(h2) and temperatur(T2) from IAWPS97 through P2=",p[2-1],"bar and s2=",s[2-1],"°C")
+                    print()
+
+                    print("Results: ")
+                    print(" ","|","p(bar)","|","T(°C)","|","h(kJ/kg)","|","s(kj/kgK)")
+                    for i in range(6):
+                        print(1+i,"|",p[i],"|",t[i],"|",h[i],"|",s[i])
+
+                    print()
+                    print("qin,2-3 = h3-h2 =",h[3-1]-h[2-1],"kJ/kg")
+                    print("qin,reh = h5-h4 =",h[5-1]-h[4-1],"kJ/kg")
+                    print("qin = qin,2-3 + qin,reh =",(h[3-1]-h[2-1])+(h[5-1]-h[4-1]),"kJ/kg")
+                    #print("qout = h4-h1 =",h[4-1]-h[1-1],"kJ/kg")
+                    print("wHPT = h3-h4 =",h[3-1]-h[4-1],"kJ/kg")
+                    print("wLPT = h5-h6 =",h[5-1]-h[6-1],"kJ/kg")
+                    print("wP = h3-h1 =",h[2-1]-h[1-1],"kJ/kg")
+                    print()
+                    print("Efficiency = (1-(h4-h2)/(h3-h2))*100 =",(1-((h[4-1]-h[1-1])/(h[3-1]-h[2-1])))*100,"%")
+                    print()
+                    print("Mean Temp = (h3-h1)/(s3-s2) =",(h[3-1]-h[1-1])/(s[3-1]-s[2-1]),"K")
+                    print("Mean Temp = Mean Temp-273.15 =",functions.kelvinToDegreeCelsius((h[3-1]-h[1-1])/(s[3-1]-s[2-1])),"°C")
+                    print()
+                    print("Mean Thermal efficiency = 1-T1/Mean Temp =",(1-((functions.degreeCelsiusToKelvin(t[1-1]))/((h[3-1]-h[1-1])/(s[3-1]-s[2-1]))))*100,"%")
+                    print()
+                except NotImplementedError:
+                    print()
+                    print("Values out of bound")
+                    print()
+
+
 
             case _:
                 break
